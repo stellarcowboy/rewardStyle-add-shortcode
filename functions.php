@@ -32,3 +32,34 @@ function ltk_show_widget($atts) {
 	return $out;
 }
 add_shortcode('show_ltk_widget', 'ltk_show_widget');
+
+function shopthepost_show_widget($atts) {
+    extract(shortcode_atts(array(
+        'id'    => '0',
+        'adblock'  => 'Turn off your ad blocker to view content',
+        'enableJs' => 'Turn on your JavaScript to view content'
+    ), $atts));
+
+    $out = '<div class="shopthepost-widget" data-widget-id="'.$id.'">
+                <script type="text/javascript" language="javascript">
+                    !function(d,s,id){
+                        var e, p = /^http:/.test(d.location) ? \'http\' : \'https\';
+                        if(!d.getElementById(id)) {
+                            e     = d.createElement(s);
+                            e.id  = id;
+                            e.src = p + \'://widgets.rewardstyle.com/js/shopthepost.js\';
+                            d.body.appendChild(e);
+                        }
+                        if(typeof window.__stp === \'object\') if(d.readyState === \'complete\') {
+                            window.__stp.init();
+                        }
+                    }(document, \'script\', \'shopthepost-script\');
+                </script>
+                <div class="rs-adblock">
+                    <img src="//assets.rewardstyle.com/images/search/350.gif" style="width:15px;height:15px;" onerror="this.parentNode.innerHTML=\''.$enableJs.'\'" />
+                    <noscript>'.$adblock.'</noscript>
+                </div>
+            </div>';
+    return $out;
+}
+add_shortcode('show_shopthepost_widget', 'shopthepost_show_widget');
